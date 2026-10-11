@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#0d1117">
+<title>Momentum Desk</title>
+<style>
+:root{--bg:#0d1117;--bg2:#151b23;--bg3:#1c2430;--bd:#273140;--tx:#e8edf4;--mu:#93a1b3;--dim:#64748b;--g:#3ccf8e;--r:#f2667a;--a:#f3b63f;--b:#6aa8f0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;padding:0 0 40px}
+.wrap{max-width:860px;margin:0 auto;padding:12px 14px}
+header{position:sticky;top:0;z-index:5;background:rgba(13,17,23,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--bd)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px}
+h1{font-size:1.05rem;font-weight:700}
+.upd{font-size:.78rem;color:var(--mu);text-align:right}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--dim);margin-right:5px;vertical-align:1px}
+.dot.ok{background:var(--g)} .dot.bad{background:var(--r)}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0}
+.strip div{background:var(--bg2);border:1px solid var(--bd);border-radius:10px;padding:8px;text-align:center}
+.strip b{display:block;font-size:1.05rem} .strip span{font-size:.7rem;color:var(--mu);text-transform:uppercase;letter-spacing:.04em}
+.mode{font-size:.8rem;color:var(--mu);margin:-4px 0 10px}
+h2{font-size:1.05rem;margin:22px 0 8px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+h2 small{font-size:.75rem;color:var(--dim);font-weight:400}
+.card{background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:10px}
+.ans{font-size:1.15rem;font-weight:700} .sub{color:var(--mu);font-size:.88rem;margin-top:4px}
+.idea{border-left:4px solid var(--bd)} .idea.PASS{border-left-color:var(--g)} .idea.CAUTION{border-left-color:var(--a)} .idea.BLOCK{border-left-color:var(--r);opacity:.75}
+.idea.stale{filter:grayscale(1);opacity:.55}
+.ih{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ih .t{font-weight:700;font-size:1.05rem} .ih .c{color:var(--mu);font-weight:400;font-size:.88rem}
+.score{font-weight:800;font-size:1.25rem;padding:2px 10px;border-radius:9px;background:var(--bg3);border:1px solid var(--bd)}
+.score small{font-size:.7rem;color:var(--mu);font-weight:500}
+.grade{font-size:.7rem;font-weight:700;padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:2px}
+.grade.PASS{background:#123d2b;color:var(--g)} .grade.CAUTION{background:#3d3112;color:var(--a)} .grade.BLOCK{background:#3d1820;color:var(--r)}
+.plain{margin:8px 0}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}
+.facts div{background:var(--bg3);border-radius:8px;padding:6px 8px;font-size:.85rem}
+.facts span{display:block;font-size:.66rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em}
+.news{font-size:.85rem;color:var(--mu);margin-top:6px}
+.tone{font-size:.7rem;font-weight:700;padding:1px 6px;border-radius:5px;background:var(--bg3);text-transform:uppercase}
+.tone.bullish{color:var(--g)} .tone.bearish{color:var(--r)} .tone.neutral{color:var(--mu)}
+.age{font-size:.75rem;color:var(--dim)} .age.old{color:var(--a)}
+svg.ch{width:100%;height:auto;display:block;margin-top:8px;background:#0f141b;border-radius:8px}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:24px 0 10px;padding-bottom:2px}
+.tabs button{flex:0 0 auto;background:var(--bg2);color:var(--mu);border:1px solid var(--bd);border-radius:20px;padding:7px 14px;font:inherit;font-size:.88rem}
+.tabs button.on{background:var(--b);color:#06121f;border-color:var(--b);font-weight:600}
+.pane{display:none} .pane.on{display:block}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+td,th{padding:7px 6px;border-bottom:1px solid var(--bd);text-align:left;vertical-align:top} th{color:var(--dim);font-weight:500;font-size:.72rem;text-transform:uppercase}
+.r{text-align:right} .g{color:var(--g)} .rd{color:var(--r)} .am{color:var(--a)} .mu{color:var(--mu)}
+.bar{height:8px;background:var(--bg3);border-radius:5px;overflow:hidden;margin-top:6px} .bar i{display:block;height:100%;background:var(--b)}
+ul.hl{list-style:none} ul.hl li{padding:9px 0;border-bottom:1px solid var(--bd);font-size:.88rem}
+.src{font-size:.68rem;color:var(--dim);border:1px solid var(--bd);border-radius:5px;padding:0 5px;margin-right:4px}
+a{color:var(--b)} details summary{cursor:pointer;color:var(--mu);font-size:.85rem;margin-top:8px}
+footer{color:var(--dim);font-size:.75rem;margin-top:26px;text-align:center}
+.cx{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+@media(max-width:420px){.facts{grid-template-columns:repeat(2,1fr)}.strip b{font-size:.95rem}}
+</style></head>
+<body>
+<header><div class="wrap"><h1>Momentum Desk · Live</h1><div class="upd"><span class="dot" id="dot"></span><span id="upd">loading…</span><br><span id="mkt"></span></div></div></header>
+<div class="wrap">
+  <div class="strip" id="strip"></div><div class="mode" id="mode"></div>
+
+  <h2>1 · Is there a trade right now? <small id="q1age"></small></h2>
+  <div id="q1"></div>
+
+  <h2>2 · What's open and how is it doing? <small id="q2age"></small></h2>
+  <div id="q2"></div>
+
+  <h2>3 · Track record <small id="q3age"></small></h2>
+  <div id="q3"></div>
+
+  <div class="tabs" id="tabs">
+    <button data-p="board" class="on">All ideas</button><button data-p="watch">Watchlist</button><button data-p="crypto">Crypto</button><button data-p="news">News</button>
+  </div>
+  <div class="pane on" id="p-board"></div>
+  <div class="pane" id="p-watch"></div>
+  <div class="pane" id="p-crypto"></div>
+  <div class="pane" id="p-news"></div>
+
+  <footer>Read-only. Nothing here places or approves trades; approvals happen in the Momentum Desk room.<br>Public view: no account amounts or account-based figures are shown. Prices are market prices. Updates about every 10 minutes. Not financial advice.</footer>
+</div>
+<script>
+(function(){
+let S=null, fetchedAt=0, lastGen=null, tab='board';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function pt(s){ if(!s) return null; let t=String(s).trim().replace(' ','T'); if(/^\d{4}-\d\d-\d\dT\d\d:\d\d(:\d\d(\.\d+)?)?$/.test(t)) t+='-06:00'; const v=Date.parse(t); return isNaN(v)?null:v; }
+function ago(s){ const t=typeof s==='number'?s:pt(s); if(t==null) return 'unknown'; const m=Math.max(0,(Date.now()-t)/60000); if(m<1) return Math.round(m*60)+'s ago'; if(m<60) return Math.round(m)+' min ago'; const h=m/60; if(h<48) return (h<10?h.toFixed(1):Math.round(h))+'h ago'; return Math.round(h/24)+'d ago'; }
+function when(s){ const t=pt(s); if(t==null) return '—'; return new Intl.DateTimeFormat('en-US',{timeZone:'America/Denver',weekday:'short',hour:'numeric',minute:'2-digit'}).format(new Date(t))+' MT'; }
+function ageTag(s, maxMin){ const t=pt(s); const old=t==null||(Date.now()-t)>maxMin*60000; return '<span class="age'+(old?' old':'')+'">'+esc(when(s))+' · '+ago(s)+'</span>'; }
+const money=(v,d)=>v==null?'—':'$'+Number(v).toLocaleString('en-US',{minimumFractionDigits:d==null?2:d,maximumFractionDigits:d==null?2:d});
+const pct=(v,d)=>v==null?'—':(v>0?'+':'')+Number(v).toFixed(d==null?1:d)+'%';
+const cls=v=>v==null?'':v>0?'g':v<0?'rd':'';
+const mktOpen=()=>!!(S&&S.market_open);
+function stale(i){ if(i.quote_stale===true) return true; const t=pt(i.updated_at); return mktOpen() && (t==null || Date.now()-t>15*60000); }
+
+function chart(i){
+  const c=i.chart; if(!c||!c.candles||!c.candles.length) return '';
+  const cs=c.candles.slice(-45), L=c.lines||{}, live=i.underlying&&i.underlying.price;
+  const lines=[['trigger',L.trigger||i.trigger_level,'#6aa8f0',''],['exit',L.exit||i.exit_level,'#f2667a','6 3'],['target',L.target||i.target,'#3ccf8e','6 3'],['support',L.support,'#64748b','2 4'],['resistance',L.resistance,'#64748b','2 4'],['50d',L.sma50,'#475569','1 4'],['200d',L.sma200,'#475569','1 4']].filter(x=>x[1]!=null);
+  let lo=Infinity,hi=-Infinity; cs.forEach(k=>{lo=Math.min(lo,k[3]);hi=Math.max(hi,k[2]);});
+  lines.slice(0,3).forEach(x=>{lo=Math.min(lo,x[1]);hi=Math.max(hi,x[1]);}); if(live){lo=Math.min(lo,live);hi=Math.max(hi,live);}
+  const pad=(hi-lo)*.06||1; lo-=pad; hi+=pad;
+  const W=600,H=220,R=78,cw=(W-R-8)/cs.length, y=v=>6+(1-(v-lo)/(hi-lo))*(H-12);
+  let s='<svg class="ch" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(i.ticker)+' daily chart">';
+  cs.forEach((k,n)=>{ const x=4+n*cw+cw/2, up=k[4]>=k[1], col=up?'#3ccf8e':'#f2667a';
+    s+='<line x1="'+x.toFixed(1)+'" x2="'+x.toFixed(1)+'" y1="'+y(k[2]).toFixed(1)+'" y2="'+y(k[3]).toFixed(1)+'" stroke="'+col+'" stroke-width="1"/>';
+    const yo=y(Math.max(k[1],k[4])), yc=y(Math.min(k[1],k[4])); s+='<rect x="'+(x-cw*.35).toFixed(1)+'" y="'+yo.toFixed(1)+'" width="'+(cw*.7).toFixed(1)+'" height="'+Math.max(1,yc-yo).toFixed(1)+'" fill="'+col+'"/>'; });
+  let used=[];
+  lines.forEach(([n,v,col,d])=>{ const yy=y(v); if(yy<0||yy>H) return; s+='<line x1="0" x2="'+(W-R)+'" y1="'+yy.toFixed(1)+'" y2="'+yy.toFixed(1)+'" stroke="'+col+'" stroke-width="1.3" '+(d?'stroke-dasharray="'+d+'"':'')+'/>';
+    let ly=yy+4; while(used.some(u=>Math.abs(u-ly)<12)) ly+=12; used.push(ly);
+    s+='<text x="'+(W-R+4)+'" y="'+ly.toFixed(1)+'" fill="'+col+'" font-size="11" font-family="system-ui">'+n+' '+Number(v).toFixed(2)+'</text>'; });
+  if(live){ const yy=y(live), x=4+cs.length*cw-2; s+='<circle cx="'+x.toFixed(1)+'" cy="'+yy.toFixed(1)+'" r="5" fill="#fff" stroke="#6aa8f0" stroke-width="2"/>'; }
+  return s+'</svg><div class="age">Daily candles (last '+cs.length+' sessions)'+(live?' · white dot = price now '+money(live)+' ('+esc(i.underlying.source)+', '+ago(i.underlying.as_of)+')':'')+'</div>';
+}
+function distTxt(i){
+  const d=i.trigger_distance_pct_live!=null?i.trigger_distance_pct_live:i.trigger_distance_pct_board; if(d==null||i.trigger_level==null) return '—';
+  const above=String(i.trigger_dir||'').toLowerCase().includes('above'); const px=i.underlying&&i.underlying.price;
+  if(px!=null && (above? px>=i.trigger_level : px<=i.trigger_level)) return '<span class="am">at/through trigger</span>';
+  return Math.abs(d).toFixed(1)+'% away';
+}
+function ideaCard(i, full){
+  const st=stale(i);
+  let h='<div class="card idea '+esc(i.grade||'')+(st?' stale':'')+'"><div class="ih"><div class="t">'+esc(i.ticker)+' <span class="c">'+esc((i.expiry||'').slice(5)+' $'+i.strike+' '+i.type)+'</span><span class="grade '+esc(i.grade||'')+'">'+esc(i.grade||'?')+'</span></div>'+
+    '<div class="score" title="Desk setup score">'+(i.score!=null?i.score+'<small>/10</small>':'<small>no score</small>')+'</div></div>';
+  h+='<div class="plain">'+esc(i.plain||i.trigger_text||'')+'</div>';
+  h+='<div class="facts"><div><span>Breakeven</span>'+(i.breakeven!=null?money(i.breakeven)+(i.breakeven_pct!=null?' <span class="mu">('+i.breakeven_pct+'% move)</span>':''):'—')+'</div>'+
+     '<div><span>Exit / target</span>'+(i.exit_level!=null?money(i.exit_level):'—')+' / '+(i.target!=null?money(i.target):'—')+'</div>'+
+     '<div><span>To trigger</span>'+distTxt(i)+'</div>'+
+     '<div><span>Option mark</span>'+money(i.mark)+' <span class="mu">('+money(i.bid)+'/'+money(i.ask)+')</span></div>'+
+     '<div><span>Stock now</span>'+(i.underlying?money(i.underlying.price)+' <span class="age">'+ago(i.underlying.as_of)+'</span>':'—')+'</div>'+
+     '<div><span>Spread</span>'+(i.spread_pct_mark!=null?i.spread_pct_mark+'% of mark':'—')+'</div></div>';
+  if(i.news) h+='<div class="news"><span class="tone '+esc(i.news.tone||'neutral')+'">'+esc(i.news.tone||'no read')+'</span> '+esc(i.news.line||'')+(i.news.news_backed===false?' <span class="mu">(X only)</span>':'')+' · <span class="age">'+ago(i.news.updated_at)+'</span></div>';
+  if(i.risk_reason) h+='<div class="news"><b>Risk:</b> '+esc(i.risk_reason)+'</div>';
+  h+=chart(i);
+  h+='<div class="age" style="margin-top:6px">Board row updated '+ageTag(i.updated_at,15)+(i.quote_stale?' · <b class="am">quote stale</b>':st?' · <b class="am">quote over 15 min old</b>':'')+'</div>';
+  if(full && i.score_parts&&i.score_parts.length) h+='<details><summary>Why this score</summary><table>'+i.score_parts.map(p=>'<tr><td>'+esc(p.label)+'</td><td class="r">'+esc(p.points)+'/'+esc(p.max)+'</td><td class="mu">'+esc(p.why||'')+'</td></tr>').join('')+'</table></details>';
+  return h+'</div>';
+}
+function renderStrip(){
+  const R=S.risk||{};
+  $('strip').innerHTML='<div><b class="'+(R.paused?'rd':'g')+'">'+(R.paused?'PAUSED':'Active')+'</b><span>Pause</span></div>'+
+    '<div><b>'+(R.loss_streak??'—')+'/'+(R.loss_streak_limit??2)+'</b><span>Loss streak</span></div>'+
+    '<div><b>'+(R.paper_caution_trades??0)+'</b><span>Tap-track trades</span></div>'+
+    '<div><b>'+(R.paper_pass_trades??0)+'/'+(R.target||30)+'</b><span>Paper trades</span></div>';
+  $('mode').innerHTML=esc(R.mode||'')+(R.go_live?' · '+esc(R.go_live):'')+' · <span class="age">risk '+ago(R.updated)+'</span>';
+}
+function renderQ1(){
+  const sc=S.scanner, ideas=S.ideas||[], live=ideas.filter(i=>i.grade!=='BLOCK');
+  let h='';
+  const yes = sc && sc.action && sc.action!=='none';
+  if(yes) h+='<div class="card"><div class="ans g">Yes: '+esc(sc.chosen||'a setup')+' ('+esc(sc.action)+')</div><div class="sub">Scanner '+ageTag(sc.at,20)+' · '+esc(sc.mode)+'</div></div>';
+  else {
+    h+='<div class="card"><div class="ans">No trade right now.</div><div class="sub">'+(sc?'Last scan '+ageTag(sc.at,20)+': '+esc(sc.scanned)+' names scanned, '+esc(sc.checked_intraday)+' checked closely, '+esc(sc.passed||0)+' passed every check.'+
+      (sc.top_reasons&&sc.top_reasons.length?' Top reason: <b>'+esc(sc.top_reasons[0].reason)+'</b>'+(sc.top_reasons[1]?'; then '+esc(sc.top_reasons[1].reason):'')+'.':''):'No scanner run logged yet.')+'</div></div>';
+  }
+  if(live.length){ h+='<div class="sub" style="margin:4px 2px 8px">Closest setups on the board (waiting for their trigger):</div>'+live.slice(0,2).map(i=>ideaCard(i,false)).join(''); }
+  $('q1').innerHTML=h; $('q1age').innerHTML='board '+ago(S.ages.ideas);
+}
+function renderQ2(){
+  const o=S.open_positions||[];
+  $('q2').innerHTML = o.length? o.map(t=>{ const p=t.mark_pnl_pct??null; const u=t.underlying_now;
+    return '<div class="card"><div class="ih"><div class="t">'+esc(t.ticker)+' <span class="c">'+esc((t.expiry||'').slice(5)+' $'+(t.strike??'')+' '+(t.type||''))+'</span> <span class="src">'+esc(t.mode||t.track||'')+'</span></div><div class="score '+cls(p)+'">'+(p!=null?pct(p):'—')+'</div></div>'+
+      '<div class="sub">Opened '+esc(when(t.opened_at))+' at '+money(t.entry_ask??t.entry_fill??t.entry_price)+(t.stop_price!=null?' · stop '+money(t.stop_price):'')+(t.take_profit_at!=null?' · take profit '+money(t.take_profit_at):'')+(u?' · stock now '+money(u.price)+' <span class="age">'+ago(u.as_of)+'</span>':'')+'</div>'+
+      (p==null?'<div class="age">P&amp;L updates at the next scanner exit check.</div>':'')+'</div>'; }).join('')
+    : '<div class="card"><div class="ans">Nothing open.</div><div class="sub">No paper or live positions right now. Paper trades open automatically when a setup passes every check.</div></div>';
+  $('q2age').textContent='trades log '+ago(S.ages.trades);
+}
+function renderQ3(){
+  const R=S.record||{}, T=R.tracks||{}, n=(T.paper||{}).trades||0, tgt=R.target||30;
+  const row=(k,lab)=>{ const t=T[k]||{}; return '<tr><td>'+lab+'</td><td class="r">'+(t.trades||0)+'</td><td class="r">'+(t.trades?(t.wins||0)+'–'+(t.trades-(t.wins||0)):'—')+'</td><td class="r">'+(t.win_rate_pct!=null?t.win_rate_pct+'%':'—')+'</td></tr>'; };
+  let h='<div class="card"><table><tr><th>Track</th><th class="r">Trades</th><th class="r">W–L</th><th class="r">Win %</th></tr>'+
+    row('paper','Paper (would auto-fill)')+row('paper_caution','Paper (needs your tap)')+row('stock_twin','Stock twins')+((T.live||{}).trades?row('live','Live'):'')+'</table>'+
+    '<div class="sub" style="margin-top:10px">Toward the 30-trade bar (paper track): <b>'+n+'/'+tgt+'</b></div><div class="bar"><i style="width:'+Math.min(100,n/tgt*100)+'%"></i></div>'+
+    '<div class="age" style="margin-top:6px">'+esc((S.risk||{}).bar||'')+'.</div>';
+  const cl=R.closed||[];
+  if(cl.length) h+='<details><summary>Closed trades ('+cl.length+')</summary><table>'+cl.map(t=>'<tr><td>'+esc(when(t.closed_at))+'</td><td>'+esc(t.ticker+' '+(t.type||''))+' <span class="src">'+esc(t.mode||'')+'</span></td><td class="mu">'+esc((t.exit_reason||'').split(':')[0])+'</td></tr>').join('')+'</table></details>';
+  $('q3').innerHTML=h+'</div>'; $('q3age').textContent='updated '+ago(R.updated_at);
+}
+function renderBoard(){ const I=S.ideas||[]; $('p-board').innerHTML='<div class="age" style="margin-bottom:8px">Options board '+ageTag(S.ages.ideas,15)+' · scores '+ago(S.ages.scores)+' · grey = quote stale or over 15 min old</div>'+(I.length?I.map(i=>ideaCard(i,true)).join(''):'<div class="card">No ideas on the board.</div>'); }
+function renderWatch(){
+  const W=(S.watchlist||[]).slice().sort((a,b)=>a.ticker.localeCompare(b.ticker));
+  $('p-watch').innerHTML='<div class="age" style="margin-bottom:8px">Daily levels built '+ageTag(S.ages.levels,24*60)+' (rebuilt after the 2:05 PM MT close check, so a day old is normal) · live stock prices '+(S.ages.stock_quotes?ago(S.ages.stock_quotes):'not yet')+(S.market_open?'':' (market closed: last price shown)')+'</div>'+
+  '<div class="card" style="padding:6px"><table><tr><th>Name</th><th class="r">Price</th><th class="r">Floor</th><th class="r">Ceiling</th><th>Read</th></tr>'+W.map(w=>{ const lv=w.live; const p=lv?lv.price:w.levels_close;
+    return '<tr><td><b>'+esc(w.ticker)+'</b>'+(w.rule1&&w.rule1!=='none'?' <span class="g">dip-buy</span>':'')+'</td><td class="r">'+money(p)+'<br><span class="age">'+(lv?ago(lv.as_of):'close')+'</span></td><td class="r">'+money(w.support)+'</td><td class="r">'+money(w.resistance)+'</td><td><span class="tone '+esc(w.bias||'neutral')+'">'+esc(w.bias||'—')+'</span>'+(w.rsi14!=null?' <span class="mu">RSI '+Math.round(w.rsi14)+'</span>':'')+'</td></tr>'; }).join('')+'</table></div>';
+}
+function spark(a){ if(!a||a.length<2) return ''; const lo=Math.min(...a),hi=Math.max(...a),W=140,H=34; const p=a.map((v,i)=>(i/(a.length-1)*W).toFixed(1)+','+(H-2-(v-lo)/((hi-lo)||1)*(H-4)).toFixed(1)).join(' ');
+  return '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:34px"><polyline points="'+p+'" fill="none" stroke="'+(a[a.length-1]>=a[0]?'#3ccf8e':'#f2667a')+'" stroke-width="1.5"/></svg>'; }
+function renderCrypto(){
+  const C=S.crypto||[];
+  $('p-crypto').innerHTML='<div class="age" style="margin-bottom:8px">Prices '+ageTag(S.ages.crypto,10)+' · updated every few minutes, 24/7 · for reference, no crypto strategy yet</div><div class="cx">'+C.map(c=>'<div class="card"><b>'+esc(String(c.symbol).replace('-USD',''))+'</b> <span class="mu" style="font-size:.8rem">'+esc(c.name||'')+'</span><div style="font-size:1.15rem;font-weight:700;margin-top:4px">'+money(c.price,c.price<1?5:2)+'</div><div class="'+cls(c.chg_pct)+'" style="font-size:.85rem">'+pct(c.chg_pct,2)+' <span class="mu">'+esc(c.chg_basis||'')+'</span></div>'+spark(c.spark)+'<div class="age">'+esc(c.source||'')+' · '+ago(c.as_of)+'</div></div>').join('')+'</div>';
+}
+function renderNews(){
+  const N=S.news||{}; let h='';
+  if(N.pinned&&N.pinned.label) h+='<div class="card"><b>'+esc(N.pinned.label)+'</b><div class="sub">'+esc(N.pinned.latest||'')+'</div>'+(N.pinned.next?'<div class="sub">Next: '+esc(N.pinned.next)+'</div>':'')+'</div>';
+  h+='<h2 style="margin-top:6px">What news and X say <small>'+ageTag(N.tone_updated_at,18*60)+'</small></h2><div class="card" style="padding:4px 12px"><ul class="hl">'+(N.tone||[]).map(t=>'<li><b>'+esc(t.ticker)+'</b> <span class="tone '+esc(t.tone||'neutral')+'">'+esc(t.tone||'—')+'</span> <span class="src">'+(t.news_backed?'news-backed':'X only')+'</span><div class="sub">'+esc(t.one_liner||'')+'</div></li>').join('')+'</ul></div>';
+  h+='<h2>Headlines <small>'+ageTag(N.updated_at,18*60)+'</small></h2><div class="card" style="padding:4px 12px"><ul class="hl">'+(N.headlines||[]).map(x=>'<li><span class="src">'+esc(x.asset||'')+'</span><span class="src">'+esc(x.tag||'')+'</span>'+(x.verified===false?'<span class="src am">not verified</span>':'')+'<div style="margin-top:4px">'+esc(x.headline)+(x.url&&/^https?:/.test(x.url)?' <a href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer">source</a>':'')+'</div></li>').join('')+'</ul></div>';
+  $('p-news').innerHTML=h;
+}
+function render(){ if(!S) return; [renderStrip,renderQ1,renderQ2,renderQ3,renderBoard,renderWatch,renderCrypto,renderNews].forEach(f=>{ try{f();}catch(e){console.error(f.name,e);} }); tick(); }
+function tick(){
+  if(!S){ return; }
+  const age=(Date.now()-fetchedAt)/1000, gen=pt(S.generated_at);
+  const gage=gen?(Date.now()-gen)/1000:1e9; $('upd').textContent='checked '+Math.round(age)+' sec ago'; $('dot').className='dot '+(gage<1800?'ok':'bad');
+  $('mkt').textContent=(S.market_open?'US market open':'US market closed')+' · data '+(gen?ago(gen):'');
+}
+async function poll(){
+  try{ const r=await fetch('state.json?t='+Date.now(),{cache:'no-store'}); if(!r.ok) throw new Error(r.status); S=await r.json(); fetchedAt=Date.now(); render(); }
+  catch(e){ $('dot').className='dot bad'; $('upd').textContent='offline · retrying'+(fetchedAt?' (last good '+Math.round((Date.now()-fetchedAt)/1000)+'s ago)':''); }
+}
+$('tabs').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; tab=b.dataset.p; document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x===b)); document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on',p.id==='p-'+tab)); });
+poll(); setInterval(poll,120000); setInterval(tick,1000);
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) poll(); });
+})();
+</script>
+</body></html>
