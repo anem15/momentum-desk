@@ -1121,7 +1121,7 @@ details.opt > summary::-webkit-details-marker{display:none}
   function rsiTxt(v){ if(v==null) return ''; v=Number(v); return v>=70?'stretched up (RSI '+v.toFixed(0)+')':v<=30?'stretched down (RSI '+v.toFixed(0)+')':'RSI '+v.toFixed(0); }
   function renderWatch(){
     const L=SNAP.levels||{}, T=L.tickers||{}, X=(SNAP.xmom||{}).tickers||{}, W=SNAP.desk_watchlist||{};
-    const groups=[['Core', W.core||[]], ['Cheap options names', W.cheap_options||[]], ['Your adds', W.nemo_adds||[]]];
+    const groups=[['Core', W.core||[]], ['Cheap options names', W.cheap_options||[]], ['Your adds', W.nemo_adds||[]], ['Swing & scalp', W.swing_scalp||[]]];
     const seen=new Set(); groups.forEach(g=>g[1].forEach(t=>seen.add(t)));
     const boardT = new Set(boardRows().map(r=>r.ticker));
     const extra = Object.keys(T).filter(t=>!seen.has(t));
@@ -1167,7 +1167,7 @@ details.opt > summary::-webkit-details-marker{display:none}
   }
 
   /* charts: offline level ladder from levels.json + optional TradingView */
-  const TV = {"AAPL":"NASDAQ:AAPL","MSFT":"NASDAQ:MSFT","NVDA":"NASDAQ:NVDA","GOOGL":"NASDAQ:GOOGL","AMZN":"NASDAQ:AMZN","META":"NASDAQ:META","TSLA":"NASDAQ:TSLA","SPY":"AMEX:SPY","QQQ":"NASDAQ:QQQ","PLTR":"NASDAQ:PLTR","COIN":"NASDAQ:COIN","SOFI":"NASDAQ:SOFI","AMD":"NASDAQ:AMD","NU":"NYSE:NU","SNAP":"NYSE:SNAP","F":"NYSE:F","AAL":"NASDAQ:AAL","MARA":"NASDAQ:MARA","CMG":"NYSE:CMG","MU":"NASDAQ:MU","VST":"NYSE:VST","INTC":"NASDAQ:INTC","PFE":"NYSE:PFE","HOOD":"NASDAQ:HOOD","RIVN":"NASDAQ:RIVN","NIO":"NYSE:NIO","WOLF":"NYSE:WOLF","APLD":"NASDAQ:APLD"};
+  const TV = {"AAPL":"NASDAQ:AAPL","MSFT":"NASDAQ:MSFT","NVDA":"NASDAQ:NVDA","GOOGL":"NASDAQ:GOOGL","AMZN":"NASDAQ:AMZN","META":"NASDAQ:META","TSLA":"NASDAQ:TSLA","SPY":"AMEX:SPY","QQQ":"NASDAQ:QQQ","PLTR":"NASDAQ:PLTR","COIN":"NASDAQ:COIN","SOFI":"NASDAQ:SOFI","AMD":"NASDAQ:AMD","NU":"NYSE:NU","SNAP":"NYSE:SNAP","F":"NYSE:F","AAL":"NASDAQ:AAL","MARA":"NASDAQ:MARA","CMG":"NYSE:CMG","MU":"NASDAQ:MU","VST":"NYSE:VST","INTC":"NASDAQ:INTC","PFE":"NYSE:PFE","HOOD":"NASDAQ:HOOD","RIVN":"NASDAQ:RIVN","NIO":"NYSE:NIO","WOLF":"NYSE:WOLF","APLD":"NASDAQ:APLD","SOXL":"AMEX:SOXL","LITE":"NASDAQ:LITE","NVTS":"NASDAQ:NVTS","AAOI":"NASDAQ:AAOI","CRDO":"NASDAQ:CRDO","CIEN":"NYSE:CIEN","BE":"NYSE:BE","COHR":"NYSE:COHR","RGTI":"NASDAQ:RGTI","OKLO":"NYSE:OKLO","NBIS":"NASDAQ:NBIS","SKHY":"NYSE:SKHY","SMCI":"NASDAQ:SMCI","ALAB":"NASDAQ:ALAB","ARM":"NASDAQ:ARM","RKLB":"NASDAQ:RKLB","HIVE":"NASDAQ:HIVE","CRWV":"NASDAQ:CRWV","VSAT":"NASDAQ:VSAT","MRVL":"NASDAQ:MRVL","NVT":"NYSE:NVT","ON":"NASDAQ:ON","AVGO":"NASDAQ:AVGO","DELL":"NYSE:DELL","CVNA":"NYSE:CVNA","SLS":"NASDAQ:SLS","IREN":"NASDAQ:IREN"};
   let chartT = null, tvOn = false;
   function renderCharts(){
     const T=(SNAP.levels||{}).tickers||{};
